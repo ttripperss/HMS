@@ -58,9 +58,7 @@ ul {
     margin: 0;
 }
 
-li {
-    margin-bottom: 10px;
-}
+
 
     li h3 {
         font-size: 16px;
@@ -90,10 +88,10 @@ a {
 .logoimage {
     width: 50px;
     height: 60px;
-    border-radius: 40%;
+    border-radius: 400%;
     overflow:hidden;
-    
-}
+    margin: 0 10px;
+    }
 /* home page ke css*/
 .text-center {
     

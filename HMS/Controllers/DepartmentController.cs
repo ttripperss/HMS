@@ -8,10 +8,16 @@ namespace HMS.Controllers
     public class DepartmentController : Controller
     {
         private static List<Department> _department = Seed.Department();
-        public IActionResult Index()
+        public IActionResult Index(string searchName)
         {
-            return View(_department);
+            // Filter the patients list based on the searchName parameter
+            var results = string.IsNullOrWhiteSpace(searchName)
+                ? _department
+                : _department.Where(p => p.Name != null && p.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            return View(results);
         }
+        
 
 
 

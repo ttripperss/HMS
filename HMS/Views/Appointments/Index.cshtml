@@ -1,0 +1,93 @@
+﻿@model IEnumerable<HMS.Models.Appointments>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Purpose)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCompleted)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoctorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Purpose)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new
+                        {
+                            Id = item.Id,
+                            PatientId = item.PatientId,
+                            DoctorId = item.DoctorId,
+                            AppointmentDate = item.AppointmentDate,
+                            Purpose = item.Purpose,
+                            IsCompleted = item.IsCompleted
+                            /* id = Model.PrimaryKey */
+                        }) | 
+                    @Html.ActionLink("Details", "Details", new
+                        {
+                            Id = item.Id,
+                            PatientId = item   .PatientId,
+                            DoctorId = item.DoctorId,
+                            AppointmentDate = item.AppointmentDate,
+                            Purpose = item.Purpose,
+                            IsCompleted = item.IsCompleted
+                            /* id = Model.PrimaryKey */
+                        }) | 
+                    @Html.ActionLink("Delete", "Delete", new
+                        {
+                            Id = item.Id,
+                            PatientId = item.PatientId,
+                            DoctorId = item.DoctorId,
+                            AppointmentDate = item.AppointmentDate,
+                            Purpose = item.Purpose,
+                            IsCompleted = item.IsCompleted
+                            /* id = Model.PrimaryKey */
+                        }) | 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

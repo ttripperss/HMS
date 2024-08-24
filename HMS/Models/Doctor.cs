@@ -11,9 +11,10 @@
         public string Email { get; set; }
 
         public Guid DepartmentID { get; set; }
-        public int Experience { get; internal set; }
-        public string ContactNumber { get; internal set; }
-        public Guid DepartmentId { get; internal set; }
+        public int Experience { get; set; }
+        
+        public Guid DepartmentId { get;  set; }
+       
     }
 
 }

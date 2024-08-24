@@ -1,0 +1,93 @@
+﻿@model IEnumerable<HMS.Models.Billing>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPaid)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <form asp-action="Index" method="get">
+        <input type="text" name="searchName" placeholder="Enter patient name" value="" />
+        <button type="submit">Search</button>
+        <button type="submit" formaction="@Url.Action("Index")">Reset</button>
+    </form>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoctorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BillingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPaid)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {
+                            Id = item.Id,
+                            PatientId = item.PatientId,
+                            DoctorID = item.DoctorId,
+                            Amount = item.Amount,
+                            BillingDate = item.BillingDate,
+                            ISpanFormattable = item.IsPaid /* id=item.PrimaryKey */
+                        }) |
+                @Html.ActionLink("Details", "Details", new {
+                            Id = item.Id,
+                            PatientId = item.PatientId,
+                            DoctorID = item.DoctorId,
+                            Amount = item.Amount,
+                            BillingDate = item.BillingDate,
+                            ISpanFormattable = item.IsPaid/* id=item.PrimaryKey */
+                        }) |
+                    @Html.ActionLink("Delete", "Delete", new
+                        {
+                            Id = item.Id,
+                            PatientId = item.PatientId,
+                            DoctorID = item.DoctorId,
+                            Amount = item.Amount,
+                            BillingDate = item.BillingDate,
+                            ISpanFormattable = item.IsPaid /* id=item.PrimaryKey */
+                        })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,4 +1,5 @@
-﻿using HMS.Data;
+﻿using HMS.Abstractions;
+using HMS.Data;
 using HMS.Models;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.ContentModel;
@@ -8,13 +9,26 @@ namespace HMS.Controllers
     public class PatientController : Controller
     {
 
-        public static List<Patient> _Patient = Seed.Patient();
-
-        public IActionResult Index()
+        IPatientServices _patientServices;
+        public PatientController(IPatientServices patientServices)
         {
-            return View(_Patient);
+            _patientServices = patientServices;
         }
 
+       // public static List<Patient> _Patient = Seed.Patient();
+
+        public IActionResult Index(string? searchName)
+        {
+            // Filter the patients list based on the searchName parameter
+            var results = _patientServices.GetPatient(searchName);
+            //var results = string.IsNullOrWhiteSpace(searchName)
+            //    ? _Patient
+            //    : _Patient.Where(p => p.Name != null && p.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            return View(results);
+        }
+
+        
 
 
         public IActionResult Create()
@@ -24,7 +38,7 @@ namespace HMS.Controllers
         public IActionResult CreatePatient(Patient patient)
         {
 
-            _Patient.Add(patient);
+            _patientServices.AddPatient(patient);
             return RedirectToAction(nameof(Index));
         }
 
@@ -42,12 +56,12 @@ namespace HMS.Controllers
         }
         public IActionResult Delete(Guid Id)
         {
-            Patient? patient = _Patient.FirstOrDefault(d => d.Id == Id);
+            Patient? patient = _patientServices.GetPatientById(Id);
             if (patient == null)
             {
                 return NotFound();
             }
-            _Patient.Remove(patient);
+            _patientServices.DeletePatient(patient);
             return RedirectToAction(nameof(Index));
 
         }
@@ -60,7 +74,7 @@ namespace HMS.Controllers
 
         public IActionResult Edit(Guid Id)
         {
-            Patient? patient = _Patient.FirstOrDefault(d => d.Id == Id);
+            Patient? patient = _patientServices.GetPatientById(Id);
             if (patient == null)
             {
                 return NotFound();
@@ -71,7 +85,7 @@ namespace HMS.Controllers
         [HttpPost]
         public IActionResult EditPatient(Patient patient)
         {
-            Patient? existPatient = _Patient.FirstOrDefault(d => d.Id == patient.Id);
+            Patient? existPatient = _patientServices.GetPatientById(patient.Id); ;
             if (existPatient == null)
             {
                 return NotFound();
@@ -87,7 +101,7 @@ namespace HMS.Controllers
 
         public IActionResult Details(Guid Id)
         {
-            Patient? patient = _Patient.FirstOrDefault(x => x.Id == Id);
+            Patient? patient = _patientServices.GetPatientById(Id);
             if (patient == null)
             {
                 return NotFound();

@@ -29,6 +29,15 @@
         </tr>
     </thead>
     <tbody>
+        <!-- Search Form -->
+        <form asp-action="Index" method="get">
+            <input type="text" name="searchName" placeholder="Enter patient name" value="" />
+            <button type="submit">Search</button>
+            <button type="submit" formaction="@Url.Action("Index")">Reset</button>
+        </form>
+
+        <!-- Display Search Results -->
+        
 @foreach (var item in Model) {
         <tr>
             <td>
@@ -44,7 +53,9 @@
                 @Html.DisplayFor(modelItem => item.ContactNumbers)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  Id = item.Id, Name = item.Name, HeadofDepartment = item.HeaOfDepartment, ContactNumbers=item.ContactNumbers/* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Edit", "Edit", new {
+                    Id = item.Id, Name = item.Name, HeadofDepartment = item.HeaOfDepartment, 
+                    ContactNumbers=item.ContactNumbers/* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Details", "Details", new { Id = item.Id, Name = item.Name, HeadofDepartment = item.HeaOfDepartment, ContactNumbers = item.ContactNumbers  /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Delete", "DeleteDepartment", new { Id = item.Id, Name = item.Name, HeaOfDepartment = item.HeaOfDepartment, ContactNumbers = item.ContactNumbers })
             </td>

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/HMS.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header style="background-color: reD;">
+    <header style="background-color: darksalmon;">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <img src="~/images/2.png" class="logoimage" alt="logo" />
@@ -39,13 +39,37 @@
                     <details>
                         <summary>Menu</summary>
                         <div class="button-container">
-                            <button class="btn btn-outline-secondary me-2"><a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Department</a></button>
-                            <button class="btn btn-outline-secondary me-2"><a class="nav-link text-dark" asp-area="" asp-controller="Doctor" asp-action="Index">Doctor</a></button>
-                            <button class="btn btn-outline-secondary me-2"><a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="Index">Appointment</a></button>
-                            <button class="btn btn-outline-secondary me-2"><a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Index">Patient</a></button>
-                          
+                            <button class="btn btn-outline-secondary me-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Department</a>
+                            </button>
+                            <button class="btn btn-outline-secondary me-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Doctor" asp-action="Index">Doctor</a>
+                            </button>
+
+                            <!-- Dropdown for Appointments -->
+                            <div class="btn-group">
+                                <button class="btn btn-outline-secondary dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Appointments
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Doctor" asp-action="Index">Doctors</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Appointments" asp-action="Index">Appointments</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <button class="btn btn-outline-secondary me-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Index">Patient</a>
+                            </button>
+                            <button class="btn btn-outline-secondary me-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Billing" asp-action="Index">Billing</a>
+                            </button>
                         </div>
                     </details>
+
 
 
                 </div>
