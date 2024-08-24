@@ -18,7 +18,7 @@ namespace HMS.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+       public IActionResult Contactus()
         {
             return View();
         }
@@ -28,5 +28,28 @@ namespace HMS.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult Aboutme()
+        {
+            return View();
+        }
+        /// <summary>
+        /// list walaa vieww
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        
+        
+        
+        public IActionResult Menu()
+        {
+            return View();
+        }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+        
+       
     }
 }
+

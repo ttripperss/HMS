@@ -1,0 +1,50 @@
+﻿namespace HMS.wwwroot.css
+
+
+body {
+    background-color: lightgoldenrodyellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+   
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+.full {
+    width: 70%;
+    
+    max-width: 1000px;
+    min-height: 100px;
+    margin: 0px;
+    display: grid;
+    grid-template-columns: 3fr 4fr;
+}
+
+.left {
+    position: initial;
+    background-color: aquamarine;
+    padding: 20px;
+    
+}
+
+.right {
+    position: initial;
+    background-color: aqua;
+    padding: 20px;
+}
+
+.image, .Contact, .Skills, .Language, .Hobbies, .title,
+.Summary, .Experience, .Education, .project {
+    margin-bottom: 30px;
+}
