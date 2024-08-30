@@ -1,14 +1,25 @@
-﻿.text-center {
+﻿
+/* wlecome to hms ke css haa*/
+.text-center {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 
 /*home page ke css*/
 .display-1 {
-    font-size: 3.5rem;
+    font-size: 3.9rem;
     font-weight: bold;
 }
+main {
+    /*display: flex;*/
+    flex-direction: column;
+    align-items: center;
+    padding: 80px;
+    
+}
+
+
 
 
 
@@ -33,12 +44,7 @@
         margin-bottom: 10px;
     }
 
-main {
-    /*display: flex;*/
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-}
+
 
 section {
     background-color: #f7f7f7;
@@ -74,7 +80,7 @@ a {
         color: #23527c;
     }
 
-
+    /*  total vists of Patient, */
 
        
 
@@ -104,9 +110,95 @@ a {
     .text-center h1 {
         background-color: azure; /* Set the background color of the text to blue */
         color: black; /* Set the text color to white for better contrast */
-        padding: 10px; /* Optional: Add padding inside the h1 tags */
+        padding: 100px; /* Optional: Add padding inside the h1 tags */
         border-radius: 5px; /* Optional: Add rounded corners */
     }
+    
 
 
     /* layout ka four button ke css*/
+/* Styling for the .anothercontainer */
+.anothercontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: calc(100vh - 130px); /* Adjust height to fit within the viewport minus header and footer */
+    padding: 20px;
+    text-align:center;
+}
+
+    /* Styling the count boxes inside anothercontainer */
+    .anothercontainer #visitCount,
+    .anothercontainer #totalPatients,
+    .anothercontainer #totalDoctors,
+    .anothercontainer #totalMembers {
+        background-color: black;
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        width: 300px;
+        text-align: center;
+        margin: 10px 0; /* Vertical margin for spacing between items */
+        font-family: Arial, sans-serif;
+    }
+.nav-link.active {
+    font-weight: bold;
+    color: #007bff !important; /* Bootstrap primary color */
+}
+
+
+/* boostrap*/
+.top-right-icon {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    cursor: pointer;
+    color: #000; /* Adjust color as needed */
+}
+
+/* for dark and light mode*/
+/* General Styles */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Button Styles */
+#themeSwitcher {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    cursor: pointer;
+    background: none;
+}
+
+#themeSwitcher .btn-outline-secondary {
+    border-color: #6c757d;
+    color: #6c757d;
+}
+
+.dark-mode #themeSwitcher .btn-outline-secondary {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+#themeSwitcher .btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.dark-mode #themeSwitcher .btn-outline-secondary:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+
+
+
+

@@ -1,10 +1,31 @@
 using HMS.Abstractions;
+using HMS.Models;
 using HMS.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
+
+builder.Services.AddDbContext<HmsContext>(options
+           => options.UseSqlServer("Server=.;Database=HMS;Trusted_Connection=True;"));
+
+// Add services to the container.patient ko addd keia ha
 builder.Services.AddTransient<IPatientServices, PatientServices>();
+builder.Services.AddControllersWithViews();
+
+// Doctor ko add karn haa
+builder.Services.AddTransient<IDoctorterServices, DoctorServices>();
+builder.Services.AddControllersWithViews();
+
+// Departmne ko register karna haa
+builder.Services.AddTransient<IDepartmentServices, DepartmentServices>();
+builder.Services.AddControllersWithViews();
+
+
+
+// Billing ko register karna ha
+builder.Services.AddTransient<IBillingServices, BillingServices>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

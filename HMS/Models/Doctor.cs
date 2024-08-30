@@ -1,4 +1,6 @@
-﻿namespace HMS.Models
+﻿using HMS.Enum;
+
+namespace HMS.Models
 {
     public class Doctor
     {
@@ -17,12 +19,4 @@
        
     }
 
-}
-public enum Specialization
-{
-    Cardiology,
-    Neurology,
-    GeneralMedicine,
-    Orthopedics,
-    etc
 }

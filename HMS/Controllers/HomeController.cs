@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using HMS.Abstractions;
 using HMS.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,14 +8,16 @@ namespace HMS.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IPatientServices _patientServices;
+        public HomeController(ILogger<HomeController> logger, IPatientServices patientServices)
         {
             _logger = logger;
+            _patientServices = patientServices;
         }
 
         public IActionResult Index()
         {
+            ViewBag.PatientCount = _patientServices.GetPatient("").Count();
             return View();
         }
 
