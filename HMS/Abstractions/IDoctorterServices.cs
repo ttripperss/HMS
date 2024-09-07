@@ -1,4 +1,5 @@
-﻿using HMS.Models;
+﻿using System.Threading.Tasks;
+using HMS.Models;
 
 namespace HMS.Abstractions
 {
@@ -6,11 +7,13 @@ namespace HMS.Abstractions
     {
         List<Doctor> GetDoctors(string search);
         void AddDoctor(Doctor doctor);
+        Task<List<Doctor>> GetDoctor();
+        Doctor? EditDoctor(Doctor doctor);
 
         void DeleteDoctor(Doctor doctor);
 
         void DeleteDoctor(Guid Id);
 
-        Patient? GetDoctorById(Guid Id);
+        Doctor? GetDoctorById(Guid Id);
     }
 }
