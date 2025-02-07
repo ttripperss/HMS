@@ -1,71 +1,94 @@
 ﻿using System.Numerics;
-using HMS.Data;
+using FluentValidation;
+using HMS.Abstractions;
 using HMS.Models;
+using HMS.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HMS.Controllers
 {
     public class DoctorController : Controller
-
-
     {
-        public static List<Doctor> _doctor = Seed.Doctors();
-
-        public IActionResult Index(string searchName)
+        IDoctorterServices _doctorServices;
+       
+        private readonly HmsContext _hmsContext;
+        public DoctorController(IDoctorterServices doctorService, HmsContext hmsContext)
         {
-            // Filter the patients list based on the searchName parameter
-            var results = string.IsNullOrWhiteSpace(searchName)
-                ? _doctor
-                : _doctor.Where(p => p.Name != null && p.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList();
-            //return RedirectToAction("Index", results);
-            return View(results);
+            _doctorServices = doctorService;
+            _hmsContext = hmsContext;
+            
         }
 
+        public async Task<ActionResult> Index()
+        {
+            List<Doctor> doctors = await _doctorServices.GetDoctor();
+            return View(doctors);
+        }
+
+
+       
         public IActionResult Create()
         {
             return View();
         }
+       
+        
+        //public IActionResult CreateDoctor(Doctor doctor)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _doctorServices.AddDoctor(doctor);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(doctor);
+        //}
+        [HttpPost]
         public IActionResult CreateDoctor(Doctor doctor)
         {
-
-            _doctor.Add(doctor);
+            // Directly add the patient without checking ModelState
+            _doctorServices.AddDoctor(doctor);
             return RedirectToAction(nameof(Index));
         }
 
-
-        /// <summary>
-        /// deparmtnet method ha delte ka
-        /// </summary>
-        /// 
-        /// <returns></returns>
-
-        public IActionResult DeleteDoctor(Doctor doctor)
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Doctor doctor)
         {
-
+            if (ModelState.IsValid)
+            {
+                var updatedDoctor = _doctorServices.EditDoctor(doctor);
+                if (updatedDoctor == null)
+                {
+                    return NotFound();
+                }
+                return RedirectToAction(nameof(Index));
+            }
             return View(doctor);
         }
-        public IActionResult Delete(Guid Id)
+
+
+       
+
+        public IActionResult DeleteDoctor(Guid Id)
         {
-            Doctor? doctor = _doctor.FirstOrDefault(d => d.Id == Id);
+            Doctor? doctor = _doctorServices.GetDoctorById(Id);
             if (doctor == null)
             {
                 return NotFound();
             }
-            _doctor.Remove(doctor);
+            _doctorServices.DeleteDoctor(doctor);
             return RedirectToAction(nameof(Index));
-
         }
+    
 
-        /// <summary>
-        /// edit star ho gaya ha 
-        /// </summary>
-        /// 
-        /// <returns></returns>
+        
 
         public IActionResult Edit(Guid id)
         {
 
-            var doctor = _doctor.FirstOrDefault(d => d.Id == id);
+            var doctor = _doctorServices.GetDoctorById(id);
             if (doctor == null)
             {
                 return NotFound();
@@ -75,19 +98,11 @@ namespace HMS.Controllers
 
         public IActionResult EditDoctor(Doctor doctor)
         {
-            Doctor? existDoctor = _doctor.FirstOrDefault(d => d.Id == doctor.Id);
+            Doctor? existDoctor = _doctorServices.EditDoctor(doctor);
             if (existDoctor == null)
             {
                 return NotFound();
             }
-            existDoctor.Name = doctor.Name;
-            existDoctor.Contactnumber=doctor.Contactnumber;
-            existDoctor.Id = doctor.Id;
-            existDoctor.DepartmentId=doctor.DepartmentId;
-            existDoctor.Email=doctor.Email;
-            existDoctor.Experience = doctor.Experience;
-            existDoctor.Specialization=doctor.Specialization;
-
             
 
             return RedirectToAction(nameof(Index));
@@ -95,7 +110,7 @@ namespace HMS.Controllers
 
         public IActionResult Details(Guid Id)
         {
-            Doctor? doctor = _doctor.FirstOrDefault(x => x.Id == Id);
+            Doctor? doctor = _doctorServices.GetDoctorById(Id);
             if (doctor == null)
             {
                 return NotFound();
@@ -107,7 +122,7 @@ namespace HMS.Controllers
         public IActionResult DetailsDoctor(Doctor doctor)
         {
 
-            _doctor.Add(doctor);
+            _doctorServices.AddDoctor(doctor);
             return RedirectToAction(nameof(Index));
 
         }
@@ -115,3 +130,7 @@ namespace HMS.Controllers
 
 
 }
+
+
+
+

@@ -1,23 +1,35 @@
-﻿using HMS.Data;
+﻿
+using HMS.Abstractions;
 using HMS.Models;
+using HMS.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HMS.Controllers
 {
     public class BillingController : Controller
     {
+        IBillingServices _billingServices;
+        public BillingController(IBillingServices billingServices)
+        {
+           _billingServices = billingServices;
+        }
 
 
-        public static List<Billing> _billing = Seed.billings();
+
+        public async Task<ActionResult> Index()
+        {
+            List<Billing> billings = await _billingServices.GetBillings();
+            return View(billings);
+        }
+
+
+
+
         public IActionResult Billing()
         {
             return View();
         }
-        public IActionResult Index()
-        {
-            return View(_billing);
-        }
-
+        
 
 
         public IActionResult Create()
@@ -27,7 +39,7 @@ namespace HMS.Controllers
         public IActionResult CreateBilling(Billing billing)
         {
 
-            _billing.Add(billing);
+            _billingServices.AddBilling(billing);
             return RedirectToAction(nameof(Index));
         }
 
@@ -45,12 +57,12 @@ namespace HMS.Controllers
         }
         public IActionResult Delete(Guid Id)
         {
-            Billing? billing = _billing.FirstOrDefault(d => d.Id == Id);
+            Billing? billing = _billingServices.GetBillingById(Id);
             if (billing == null)
             {
                 return NotFound();
             }
-            _billing.Remove(billing);
+            _billingServices.DeleteBilling(billing);
             return RedirectToAction(nameof(Index));
 
         }
@@ -64,7 +76,7 @@ namespace HMS.Controllers
         public IActionResult Edit(Guid id)
         {
 
-            Billing? billing = _billing.FirstOrDefault(d => d.Id == id);
+            Billing? billing = _billingServices.GetBillingById(id);
             if (billing == null)
             {
                 return NotFound();
@@ -74,20 +86,20 @@ namespace HMS.Controllers
 
         public IActionResult EditBilling(Billing billing)
         {
-            Billing? existBilling = _billing.FirstOrDefault(d => d.Id == billing.Id);
+            Billing? existBilling = _billingServices.GetBillingById(billing.Id);
             if (existBilling == null)
             {
                 return NotFound();
             }
-           _billing.Remove(existBilling);
-            _billing.Add(billing);
+            _billingServices.DeleteBilling(billing);
+            _billingServices.AddBilling(billing);
 
             return RedirectToAction("Index");
         }
 
         public IActionResult Details(Guid Id)
         {
-            Billing? billing = _billing.FirstOrDefault(x => x.Id == Id);
+            Billing? billing = _billingServices.GetBillingById(Id);
             if (billing == null)
             {
                 return NotFound();
@@ -99,7 +111,7 @@ namespace HMS.Controllers
         public IActionResult DetailsBilling(Billing billing)
         {
 
-            _billing.Add(billing);
+            _billingServices.AddBilling(billing);
             return RedirectToAction(nameof(Index));
 
         }

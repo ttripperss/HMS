@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using HMS.Abstractions
+
+@inject IContextServices _context;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,6 +23,7 @@
 </head>
 <body>
     <header style="background-color: darksalmon;">
+      
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <img src="~/images/2.png" class="logoimage" alt="logo" />
@@ -47,43 +52,72 @@
                     
                 </ul>
 
+                @if (_context.IsUserLoggedIn() == true)
+                {
 
-                <details>
-                    <summary>Menu</summary>
-                    <div class="button-container">
-                        <button class="btn btn-outline-secondary me-2">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Department</a>
-                        </button>
-                        <button class="btn btn-outline-secondary me-2">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Doctor" asp-action="Index">Doctor</a>
-                        </button>
+                      // user login kara yo picture show kara 
+                      
+                        <li class="nav-item">
+                            <a class="nav-link text-dark ">@_context.GetUserName()</a>
+                        </li>
+                   
+                    <li class="nav-item">
+                        <a href="Account/Index"> 
+                        <img src=@_context.GetProfilePicture() alt="Profile Picture" class="rounded-circle" style="width:50px; height:50px"/>
+                        </a>
+                        </li>
 
+                    
+                    <details>
+                        
 
-                        <!-- Dropdown for Appointments -->
-                        <div class="btn-group">
-                            <button class="btn btn-outline-secondary dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                Appointments
+                        <summary>Menu</summary>
+                        <div class="button-container">
+                            <button class="btn btn-outline-secondary me-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Department</a>
                             </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Doctor" asp-action="Index">Doctors</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Appointments" asp-action="Index">Appointments</a>
-                                </li>
-                            </ul>
-                        </div>
+                            <button class="btn btn-outline-secondary me-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Doctor" asp-action="Index">Doctor</a>
+                            </button>
+                          
+                            <!-- Dropdown for Appointments -->
+                            <div class="btn-group">
+                                <button class="btn btn-outline-secondary dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Appointments
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Doctor" asp-action="Index">Doctors</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Appointments" asp-action="Index">Appointments</a>
+                                    </li>
 
-                        <button class="btn btn-outline-secondary me-2">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Index">Patient</a>
-                        </button>
-                        <button class="btn btn-outline-secondary me-2">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Billing" asp-action="Index">Billing</a>
-                        </button>
-                    </div>
-                </details>
+                                </ul>
+                            </div>
+
+                            <button class="btn btn-outline-secondary me-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Index">Patient</a>
+                            </button>
+                            <button class="btn btn-outline-secondary me-2">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Billing" asp-action="Index">Billing</a>
+                            </button>
+                        </div>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
+                        </li>
+                    </details>
+                }
+                else
+                {
+                    <a class="nav-link text-primary" asp-area="" asp-controller="Authentication" asp-action="Signup">Register</a>
+
+                    <a class="nav-link text-success" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a>
+
+                  
+                }
             </div>
-            </div>
+            
             <div class="theme-switcher">
                 <button id="theme-toggle" class="btn btn-light">
                     <i id="theme-icon" class="bi bi-moon"></i>
@@ -125,7 +159,7 @@
 
     <footer class="border-top footer text-muted" style="background-color:darksalmon">
         <div class="container">
-            Haris  - HMS - <a asp-area="" asp-controller="Home" asp-action="Aboutme">Aboutme</a>
+             HMS - <a asp-area="" asp-controller="Home" asp-action="Aboutme">Aboutme</a>
             <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

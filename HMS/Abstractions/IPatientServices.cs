@@ -18,3 +18,4 @@ namespace HMS.Abstractions
         Patient? GetPatientById(Guid Id);
     }
 }
+

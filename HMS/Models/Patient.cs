@@ -1,37 +1,29 @@
-﻿using HMS.Enum;
-using Humanizer;
+﻿using System;
+using System.Collections.Generic;
 
-namespace HMS.Models
+namespace HMS.Models;
+
+public partial class Patient
 {
-    public class Patient
-    {
-       
-         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public int Age {  get; set; }
+    public Guid Id { get; set; }
 
-        public  Gender Gender {  get; set; }
-       public string ContactNumber {  get; set; }
-        public string Email {  get; set; }
+    public string? Name { get; set; }
 
-        public Address Address {  get; set; }    
-         
-        public Guid DoctorID { get; set; }
-        public DateTime AdmissionDate { get; set; }
+    public int? Age { get; set; }
 
-        public DateTime DischargeDate { get; set; }
-        public Guid DoctorId { get;  set; }
-    }
-    
-}
-public class Address
-{
-    public string Street { get; set; } = string.Empty;
-    public string   City { get; set; } = string.Empty;
-    public string Zipcode { get; set; } = string.Empty;
-    public string ZipCode { get; internal set; }
-    public string Country { get; set; } = string.Empty;
-    public string State { get; internal set; } = string.Empty;
+    public int? Gender { get; set; }
 
-   
+    public int? ContactNumber { get; set; }
+
+    public string? Email { get; set; }
+
+    public DateTime? AdmissionDate { get; set; }
+
+    public Guid? DoctorId { get; set; }
+
+    public DateTime? DischargeDate { get; set; }
+
+    public bool? IsDeleted { get; set; }
+
+    public string? ProfilePictureId { get; set; }
 }

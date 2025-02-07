@@ -1,21 +1,33 @@
-﻿using HMS.Data;
+﻿
+using HMS.Abstractions;
 using HMS.Models;
+using HMS.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HMS.Controllers
 {
     public class AppointmentsController : Controller
     {
-        private static List<Appointments> _appointments = Seed.Appointments();
-        public IActionResult Index(string searchName)
+        IAppointmentsServices _appointmentsService;
+        public AppointmentsController(IAppointmentsServices appointmentService)
         {
-            // Filter the patients list based on the searchName parameter
-            var results = string.IsNullOrWhiteSpace(searchName)
-                ? _appointments
-                : _appointments.Where(p => p.Purpose != null && p.Purpose.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList();
-
-            return View(results);
+            _appointmentsService = appointmentService;
         }
+        public async Task<ActionResult> Index()
+        {
+            List<Appointment> appointments = await _appointmentsService.GetAppointments();
+            return View(appointments);
+        }
+
+        //public IActionResult Index(string searchName)
+        //{
+        //    // Filter the patients list based on the searchName parameter
+        //    var results = string.IsNullOrWhiteSpace(searchName)
+        //        ? _appointments
+        //        : _appointments.Where(p => p.Purpose != null && p.Purpose.Contains(searchName, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        //    return View(results);
+        //}
 
 
 
@@ -23,10 +35,10 @@ namespace HMS.Controllers
         {
             return View();
         }
-        public IActionResult CreateAppointments(Appointments appointments)
+        public IActionResult CreateAppointments(Appointment appointments)
         {
 
-            _appointments.Add(appointments);
+            _appointmentsService.AddAppointments(appointments);
             return RedirectToAction(nameof(Index));
         }
 
@@ -37,19 +49,19 @@ namespace HMS.Controllers
         /// 
         /// <returns></returns>
 
-        public IActionResult DeleteAppointments(Appointments appointments)
+        public IActionResult DeleteAppointments(Appointment appointments)
         {
 
             return View(appointments);
         }
         public IActionResult Delete(Guid Id)
         {
-            Appointments? appointments = _appointments.FirstOrDefault(d => d.Id == Id);
+            Appointment? appointments = _appointmentsService.GetAppointmentsById(Id);
             if (appointments == null)
             {
                 return NotFound();
             }
-            _appointments.Remove(appointments);
+            _appointmentsService.DeleteAppointments(appointments);
             return RedirectToAction(nameof(Index));
 
         }
@@ -63,7 +75,7 @@ namespace HMS.Controllers
         public IActionResult Edit(Guid id)
         {
 
-            var appointments = _appointments.FirstOrDefault(d => d.Id == id);
+            var appointments = _appointmentsService.GetAppointmentsById(id);
             if (appointments == null)
             {
                 return NotFound();
@@ -71,21 +83,20 @@ namespace HMS.Controllers
             return View(appointments);
         }
 
-        public IActionResult EditAppointment(Appointments appointments)
+        public IActionResult EditAppointment(Appointment appointments)
         {
-            Appointments? existAppointments = _appointments.FirstOrDefault(d => d.Id == appointments.Id);
+            Appointment? existAppointments = _appointmentsService.EditAppointment(appointments);
             if (existAppointments == null)
             {
                 return NotFound();
             }
-            _appointments.Remove(existAppointments);
-            _appointments.Add(appointments);
+            
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Details(Guid Id)
         {
-            Appointments? appointment = _appointments.FirstOrDefault(x => x.Id == Id);
+            Appointment? appointment = _appointmentsService.GetAppointmentsById(Id);
             if (appointment == null)
             {
                 return NotFound();
@@ -94,10 +105,10 @@ namespace HMS.Controllers
             return View("Details", appointment);
 
         }
-        public IActionResult DetailsAppontments(Appointments appointment)
+        public IActionResult DetailsAppointments(Appointment appointment)
         {
 
-            _appointments.Add(appointment);
+            _appointmentsService.AddAppointments(appointment);
             return RedirectToAction(nameof(Index));
 
         }

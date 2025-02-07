@@ -1,4 +1,6 @@
-﻿
+﻿*{
+    list-style :none;
+}
 /* wlecome to hms ke css haa*/
 .text-center {
     text-align: center;

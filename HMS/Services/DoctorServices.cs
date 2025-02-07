@@ -1,56 +1,110 @@
 ﻿using HMS.Abstractions;
-using HMS.Data;
+using HMS.Extensions;
 using HMS.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HMS.Services
 {
     public class DoctorServices : IDoctorterServices
     {
-        private static List<Doctor> _doctors  = Seed.Doctors();
+        private readonly HmsContext _hmsContext;
+        private readonly IDepartmentServices _departmentServices;
+        public DoctorServices(HmsContext hmsContext, IDepartmentServices departmentServices)
+        {
+            _hmsContext = hmsContext;
+            _departmentServices = departmentServices;
+        }
 
-        public List<Doctor> GetDoctor(string search = null) {
+        public List<Doctor> GetDoctors()   //
+        {
+            List<Doctor> doctors = new List<Doctor>();
+            return doctors;
+        }
+        public async Task<List<Doctor>> GetDoctor()
+        {
+            var doctor = _hmsContext.Doctors.Where(x => x.IsDeleted == null || x.IsDeleted == true).ToList();
+            return doctor;
+        }
+
+
+
+        //public List<Doctor> GetDoctor(string search = null) {
+
+        //    var  results = string.IsNullOrWhiteSpace(search)
+        //         ? _doctors
+        //        : _doctors.Where(p => p.Name != null && p.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+        //    return results;
+
+
+        //}
+        //public void AddDoctors(Doctor doctor) {
+        //    doctor.Id = GuidExtension.NewGuid();
+        //    doctor.IsDeleted = true;
+
+        //    _hmsContext.Doctors.Add(doctor);
+        //    _hmsContext.SaveChanges();
+        //}
+
+        public void DeleteDoctor(Doctor doctor) //
+        {
+            doctor.IsDeleted = false;
+            _hmsContext.Doctors.Update(doctor);
             
-            var  results = string.IsNullOrWhiteSpace(search)
-                 ? _doctors
-                : _doctors.Where(p => p.Name != null && p.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
-            return results;
-
-
+            _hmsContext.SaveChanges();
         }
-        public void AddDoctors(Doctor doctor) {
-            _doctors.Add(doctor);
-                   }
-
-        public void DeleteDoctor(Doctor doctor)
+        
+        public void DeleteDoctor(Guid id)   //
         {
+          Doctor? doctor =  GetDoctorById(id);
+            _hmsContext?.Doctors.Remove(doctor);
 
-            _doctors.Remove(doctor);
         }
-        public void DeleteDoctor(Guid Id)
+        public Doctor? EditDoctor(Doctor doctor)
         {
-            Doctor? doctor = GetDoctorById(Id);
+            Doctor? existingdoctor = GetDoctorById(doctor.Id);
+            if (existingdoctor != null)
+            {
+                existingdoctor.Id = doctor.Id;
+                existingdoctor.Name = doctor.Name;
+                existingdoctor.Email = doctor.Email;
+                existingdoctor.DepartmentId = doctor.DepartmentId;
+                existingdoctor.Experience = doctor.Experience;
+                existingdoctor.Specialization = doctor.Specialization;
 
-            DeleteDoctor(doctor);
+                _hmsContext.Doctors.Update(existingdoctor);
+                _hmsContext.SaveChanges();
+                return existingdoctor;
+                
+            }
+            return null;
         }
 
-        public Doctor? GetDoctorById(Guid Id)
+        public Doctor? GetDoctorById(Guid Id)  //
         {
-            return _doctors.FirstOrDefault(m => m.Id == Id);
+            return _hmsContext.Doctors.FirstOrDefault(m => m.Id == Id);
         }
 
-        public List<Doctor> GetDoctors(string search)
-        {
-            throw new NotImplementedException();
-        }
+        //public void CreateDoctor(Doctor doctor)
+        //{
+        //    // Add default values for new doctor
+        //    doctor.Id = Guid.NewGuid();
+        //    doctor.IsActive = true;
+        //    doctor.IsDeleted = false;
 
-        public void AddDoctor(Doctor doctor)
-        {
-            throw new NotImplementedException();
-        }
+        //    _hmsContext.Doctors.Add(doctor); // Add doctor to the database
+        //    _hmsContext.SaveChanges();      // Save changes to the database
+        //}
 
-        Patient? IDoctorterServices.GetDoctorById(Guid Id)
+
+        public void AddDoctor(Doctor doctor)  //
         {
-            throw new NotImplementedException();
+            doctor.Id = Guid.NewGuid();
+            doctor.IsDeleted = true;
+            _hmsContext.Doctors.Add(doctor);
+            _hmsContext.SaveChanges();
         }
+     
     }
 }
+
+

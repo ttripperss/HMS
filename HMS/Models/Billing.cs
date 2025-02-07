@@ -1,18 +1,21 @@
-﻿
-namespace HMS.Models
-{
-    public class Billing
-    {
-        public Guid Id { get; set; } 
-        public Guid PatientId { get; set; }
-        public Guid DoctorId { get; set; }
-        public decimal Amount { get; set; }
-        public DateTime BillingDate { get; set; }
-        public bool IsPaid { get; set; } = false;
+﻿using System;
+using System.Collections.Generic;
 
-        public static explicit operator Billing(List<Billing> v)
-        {
-            throw new NotImplementedException();
-        }
-    }
+namespace HMS.Models;
+
+public partial class Billing
+{
+    public Guid Id { get; set; }
+
+    public Guid? PatientId { get; set; }
+
+    public Guid? DoctorId { get; set; }
+
+    public decimal? Amount { get; set; }
+
+    public DateTime? BillingDate { get; set; }
+
+    public bool? IsPaid { get; set; }
+
+    public bool? IsDeleted { get; set; }
 }

@@ -17,7 +17,7 @@ namespace HMS.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.PatientCount = _patientServices.GetPatient("").Count();
+            
             return View();
         }
 

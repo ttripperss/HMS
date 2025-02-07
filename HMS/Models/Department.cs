@@ -1,21 +1,19 @@
-﻿namespace HMS.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace HMS.Models;
+
+public partial class Department
 {
-    public sealed class Department
-    {
-        public  Guid Id { get; set; }
-        public string Name { get; set; }=string.Empty;
-        public string HeaOfDepartment { get; set; }= string.Empty;
-        public string ContactNumbers { get; set; } = string.Empty;
+    public Guid Id { get; set; }
 
-       public List<Doctor> Doctors { get; set; }
-        
-        
+    public string? Name { get; set; }
 
-        public Department()
-        {
-            Doctors = new List<Doctor>();
-            Id = Guid.NewGuid();
-        }
-    
-    }
+    public string? HeaOfDepartment { get; set; }
+
+    public string? ContactNumbers { get; set; }
+
+    public bool? IsActive { get; set; }
+
+    public bool? IsDeleted { get; set; }
 }

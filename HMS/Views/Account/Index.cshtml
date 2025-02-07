@@ -1,0 +1,83 @@
+﻿@model HMS.Models.User
+
+@{
+    ViewBag.Title = "Manage Profile";
+}
+
+<div class="container mt-5">
+    <h2>Manage Your Account</h2>
+
+    <!-- Tabs Navigation -->
+    <ul class="nav nav-tabs" id="profileTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profilePicture-tab" data-bs-toggle="tab" data-bs-target="#profilePicture" type="button" role="tab" aria-controls="profilePicture" aria-selected="false">Profile Picture</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="password-tab" data-bs-toggle="tab" data-bs-target="#password" type="button" role="tab" aria-controls="password" aria-selected="false">Password</button>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="profileTabContent">
+        <!-- Profile Tab -->
+        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <form asp-action="UpdateProfile" method="post">
+                <input type="hidden"  name="UserId" value="@Model.UserId"/>
+                <div class="mb-3">
+                    <label for="FirstName" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="FirstName" value="@Model.FirstName" placeholder="Enter your name">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" name="Email" value="@Model.Email" placeholder="Enter your email">
+                </div>
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+        </div>
+
+        <!-- Profile Picture Tab -->
+        <div class="tab-pane fade" id="profilePicture" role="tabpanel" aria-labelledby="profilePicture-tab">
+            <div class="text-center">
+                <img src="~/images/@Model.ProfilePictureName" alt="Profile Picture" class="rounded-circle mb-3" style="width:150px; height:150px; object-fit:cover;">
+                <div>
+                    <button class="btn btn-danger" asp-action="RemoveProfilePicture">Remove Picture</button>
+                </div>
+            </div>
+            <form asp-action="UploadProfilePicture" method="post" enctype="multipart/form-data" class="mt-3">
+                <input type="hidden" name="UserId" value="@Model.UserId" />
+                <div class="mb-3">
+                    <label for="upload" class="form-label">Upload New Profile Picture</label>
+                    <input class="form-control" type="file" id="upload" name="ProfilePicture">
+                </div>
+                <button type="submit" class="btn btn-primary">Upload Picture</button>
+            </form>
+        </div>
+
+        <!-- Password Tab -->
+        <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
+            <form asp-action="PasswordUpdate" method="post">
+                <div class="mb-3">
+                      <label for="currentPassword" class="form-label">Current Password</label>
+                    <input type="password" class="form-control" id="currentPassword" name="OldPassword" placeholder="Enter current password">
+                 </div> 
+                <div class="mb-3">
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="newPassword" name="NewPassword" placeholder="Enter new password">
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Confirm new password">
+                </div>
+                <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+}

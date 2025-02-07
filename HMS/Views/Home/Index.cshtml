@@ -1,9 +1,9 @@
-﻿@{
+﻿@* @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-1">Welcome To HMS</h1>
+    <h1 class="display-1">Welcome To HMS </h1>
     <h1 class="display-1"> Designed by: Haris Hamayun</h1>
 
     <div id="visitCount">Total Visits: 0</div>
@@ -18,6 +18,222 @@
 
       
 
+ *@
+ @page
+@{
+}
 
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS About</title>
+    <link rel="stylesheet" href="~/css/HMSAbout.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"> <!-- AOS Library -->
+    <style>
+        /* Basic styling for the layout */
+        body {
+            background: linear-gradient(to bottom, #f4f6f9, #dbe6f6);
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
 
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+            color: #2c3e50;
+            font-weight: bold;
+            position: relative;
+            animation: fadeIn 1.5s ease-in-out; /* Add fade-in animation */
+        }
+
+        .section-title::after {
+            content: "";
+            width: 60px;
+            height: 4px;
+            background-color: #e74c3c;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -8px;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .gallery img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 4px solid #3498db;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.1); /* Add a hover zoom effect */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.1);
+        }
+
+        /* Counter Section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            padding: 20px;
+            background-color: #f7f9fc;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats .stat-item {
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        .stat-item h2 {
+            font-size: 2.5em;
+            color: #27ae60;
+        }
+
+        .stat-item p {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        /* Keyframe Animations */
+        @@keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @@keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Hospital Overview -->
+        <div class="section" data-aos="fade-up">
+            <h1 class="section-title">Welcome to Our Hospital</h1>
+            <p>
+                Our hospital is dedicated to providing top-quality healthcare services to the community. With advanced facilities and a dedicated team, we strive to ensure the best care for our patients.
+            </p>
+        </div>
+
+        <!-- Counter Section -->
+        <div class="stats" data-aos="zoom-in">
+            <div class="stat-item">
+                <h2>200+</h2>
+                <p>Doctors</p>
+            </div>
+            <div class="stat-item">
+                <h2>5000+</h2>
+                <p>Patients Treated</p>
+            </div>
+            <div class="stat-item">
+                <h2>10+</h2>
+                <p>Departments</p>
+            </div>
+        </div>
+
+        <!-- Photo Gallery -->
+        <div class="section" data-aos="fade-up">
+            <h2 class="section-title">Gallery of Our Facilities</h2>
+            <div class="gallery">
+                <img src="~/images/1 (1).jpg" alt="Reception Area">
+                <img src="~/images/1 (2).jpg" alt="Patient Room">
+                <img src="~/images/1 (3).jpg" alt="Emergency Room">
+                <img src="~/images/1 (4).jpg" alt="Operating Theater">
+                <img src="~/images/1 (5).jpg" alt="Laboratory">
+                <img src="~/images/1 (6).jpg" alt="Outdoor View">
+            </div>
+        </div>
+
+        <!-- Departments and Services -->
+        <div class="section" data-aos="fade-right">
+            <h2 class="section-title">Departments and Services</h2>
+            <p>We offer a range of specialized services, including Cardiology, Pediatrics, Radiology, and more. Our state-of-the-art equipment ensures that patients receive the best possible care.</p>
+            <a href="#services" class="cta-button">Learn More</a>
+        </div>
+
+        <!-- Meet Our Team -->
+        <div class="section" data-aos="fade-left">
+            <h2 class="section-title">Meet Our Team</h2>
+            <p>Our dedicated team of doctors, nurses, and staff work tirelessly to ensure the health and well-being of our patients. We take pride in our compassionate care and commitment to excellence.</p>
+        </div>
+
+        <!-- Achievements -->
+        <div class="section" data-aos="fade-up">
+            <h2 class="section-title">Achievements and Awards</h2>
+            <p>We are proud of our achievements in healthcare excellence. Our hospital has received numerous awards for outstanding patient care and innovation in medical practices.</p>
+        </div>
+    </div>
+
+    <!-- AOS Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+
+</html>

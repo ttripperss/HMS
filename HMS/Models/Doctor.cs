@@ -1,22 +1,27 @@
-﻿using HMS.Enum;
+﻿using System;
+using System.Collections.Generic;
 
-namespace HMS.Models
+namespace HMS.Models;
+
+public partial class Doctor
 {
-    public class Doctor
-    {
-        public Specialization Specialization {  get; set; }
+    public Guid Id { get; set; }
 
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        
-        public int Contactnumber { get; set; }
-        public string Email { get; set; }
+    public string? Name { get; set; }
 
-        public Guid DepartmentID { get; set; }
-        public int Experience { get; set; }
-        
-        public Guid DepartmentId { get;  set; }
-       
-    }
+    public int? ContactNumber { get; set; }
 
+    public string? Email { get; set; }
+
+    public Guid? DepartmentId { get; set; }
+
+    public int? Experience { get; set; }
+
+    public string? Specialization { get; set; }
+
+    public bool? IsDeleted { get; set; }
+
+    public bool? IsActive { get; set; }
+
+    //public string? ProfilePictureId { get; set; }
 }
